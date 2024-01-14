@@ -27,9 +27,6 @@ jobs:
           POSTGRES_DB: circle_test
     steps:
       - checkout
-      - run:
-          name: Change Directory
-          command: cd /path/to/your/project
       - run: dockerize -wait tcp://localhost:5432 -timeout 1m
       - run:
           name: Run Tests
@@ -84,6 +81,7 @@ jobs:
               docker push registry.heroku.com/$HEROKU_APP_NAME/web
               # format --- docker push registry.heroku.com/<app-name>/web
               heroku container:release web -a $HEROKU_APP_NAME
+
 workflows:
   # Declare a workflow that runs on every push to the main branch
   simple_workflow:

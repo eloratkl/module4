@@ -1,7 +1,7 @@
 version: 2.1
 orbs:
-  docker: circleci/docker@2.4.0
   snyk: snyk/snyk@2.0.2
+  docker: circleci/docker@2.4.0
   heroku: circleci/heroku@2.0.0
 
 jobs:

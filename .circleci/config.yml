@@ -10,9 +10,8 @@ jobs:
       - image: cimg/openjdk:17.0.7
       - image: cimg/postgres:15.2-postgis
         environment:
-          POSTGRES_USER: postgres
-          POSTGRES_DB: ecommerce
-          POSTGRES_PASSWORD: password
+          POSTGRES_USER: circleci
+          POSTGRES_DB: circle_test
     parameters:
       dockerhub-username:
         type: string
@@ -24,6 +23,10 @@ jobs:
   test:
     docker:
       - image: cimg/openjdk:17.0.7
+    environment:
+          SPRING_DATASOURCE_URL: "jdbc:postgresql://localhost:5432/circle_test?sslmode=disable"
+          SPRING_DATASOURCE_USERNAME: "circleci"
+          SPRING_DATASOURCE_PASSWORD: ""
     steps:
       - checkout
       - run: |

@@ -24,7 +24,6 @@ jobs:
         environment:
           POSTGRES_USER: circleci
           POSTGRES_DB: circle_test
-          POSTGRES_PASSWORD: ""
           DATABASE_URL: postgres://circleci@localhost:5432/circle_test
     steps:
       - checkout

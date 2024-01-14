@@ -8,6 +8,11 @@ jobs:
   build:
     docker:
       - image: cimg/openjdk:17.0.7
+      - image: cimg/postgres:15.2-postgis
+        environment:
+          POSTGRES_USER: postgres
+          POSTGRES_DB: ecommerce
+          POSTGRES_PASSWORD: password
     parameters:
       dockerhub-username:
         type: string

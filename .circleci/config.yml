@@ -26,7 +26,6 @@ jobs:
             POSTGRES_USER: postgres
             POSTGRES_PASSWORD: password
             POSTGRES_HOST_AUTH_METHOD: trust
-            PGDATA: /var/lib/postgresql/data
     steps:
       - checkout
       - run: dockerize -wait tcp://localhost:5432 -timeout 1m

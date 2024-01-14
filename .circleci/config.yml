@@ -1,0 +1,109 @@
+version: 2.1
+orbs:
+  docker: circleci/docker@2.4.0
+  snyk: snyk/snyk@2.0.2
+  heroku: circleci/heroku@2.0.0
+
+jobs:
+  build:
+    docker:
+      - image: cimg/openjdk:17.0.7
+    parameters:
+      dockerhub-username:
+        type: string
+      dockerhub-password:
+        type: string
+    steps:
+      - checkout
+      - run: mvn clean package
+  test:
+    docker:
+      - image: cimg/openjdk:17.0.7
+    steps:
+      - checkout
+      - run: |
+          echo "Running tests..."
+          mvn test
+  scan:
+    docker:
+        - image: cimg/openjdk:17.0.7
+    steps:
+      - setup_remote_docker
+      - checkout
+      # Build the Docker image
+      - run: docker build -t $DOCKER_LOGIN/$IMAGE_NAME:latest .
+      # Login to Docker Hub using environment variables
+      - run: echo "${DOCKER_PASSWORD}" | docker login -u "${DOCKER_LOGIN}" --password-stdin
+      # Push the image to Docker Hub
+      - run: docker push $DOCKER_LOGIN/$IMAGE_NAME:latest
+      # Run Snyk scan on the Docker image
+      - snyk/scan:
+          docker-image-name: $DOCKER_LOGIN/$IMAGE_NAME:latest
+          severity-threshold: critical
+
+  build-and-push:
+    executor: docker/docker
+    steps:
+      - setup_remote_docker
+      - checkout
+      - docker/check
+      - docker/build:
+          image: $DOCKER_LOGIN/$IMAGE_NAME
+          tag: <<pipeline.git.tag>>
+      # Push the Docker image to Docker Hub
+      - docker/push:
+          image: $DOCKER_LOGIN/$IMAGE_NAME
+          tag: <<pipeline.git.tag>>
+
+  pull-and-deploy:
+    docker:
+      - image: cimg/openjdk:17.0.7
+    steps:
+      - setup_remote_docker
+      - heroku/install
+      - run:
+          name: Pull Docker Image From Docker Hub
+          command: docker pull $DOCKER_LOGIN/$IMAGE_NAME:latest
+      - run:
+          name: Heroku Container Push With Image From Docker Hub
+          command: |
+              heroku container:login
+              docker tag $DOCKER_LOGIN/$IMAGE_NAME:latest registry.heroku.com/$HEROKU_APP_NAME/web
+              # format --- docker tag <image name from docker hub> registry.heroku.com/<app-name>/web
+              docker push registry.heroku.com/$HEROKU_APP_NAME/web
+              # format --- docker push registry.heroku.com/<app-name>/web
+              heroku container:release web -a $HEROKU_APP_NAME
+workflows:
+  # Declare a workflow that runs on every push to the main branch
+  simple_workflow:
+    jobs:
+      # Build job triggered on changes to the main branch
+      - build:
+          dockerhub-username: $DOCKER_LOGIN
+          dockerhub-password: $DOCKER_PASSWORD
+          filters:
+            branches:
+              only: main
+
+      # Test job runs after the build job and only on the main branch
+      - test:
+          # to let `test` job run after the `build` job
+          requires:
+            - build
+          filters:
+            branches:
+              only: main
+
+      - scan:
+          requires:
+            - test
+
+      # Build-and-push job runs after the test job
+      - build-and-push:
+          requires:
+            - scan
+
+      # Deploy job runs after the build-and-push job
+      - pull-and-deploy:
+          requires:
+            - build-and-push

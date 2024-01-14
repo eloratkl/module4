@@ -22,9 +22,11 @@ jobs:
       - image: cimg/openjdk:17.0.7
       - image: cimg/postgres:15.2-postgis
         environment:
-          POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: password
-          POSTGRES_DB: circle_test
+            POSTGRES_DB: circle_test
+            POSTGRES_USER: postgres
+            POSTGRES_PASSWORD: password
+            POSTGRES_HOST_AUTH_METHOD: trust
+            PGDATA: /var/lib/postgresql/data
     steps:
       - checkout
       - run: dockerize -wait tcp://localhost:5432 -timeout 1m

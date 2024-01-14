@@ -8,10 +8,6 @@ jobs:
   build:
     docker:
       - image: cimg/openjdk:17.0.7
-      - image: cimg/postgres:15.2-postgis
-        environment:
-          POSTGRES_USER: circleci
-          POSTGRES_DB: circle_test
     parameters:
       dockerhub-username:
         type: string
@@ -20,19 +16,24 @@ jobs:
     steps:
       - checkout
       - run: mvn clean package -DskipTests=true
+
   test:
     docker:
       - image: cimg/openjdk:17.0.7
-    environment:
-          SPRING_DATASOURCE_URL: "jdbc:postgresql://localhost:5432/circle_test?sslmode=disable"
-          SPRING_DATASOURCE_USERNAME: "circleci"
-          SPRING_DATASOURCE_PASSWORD: ""
+      - image: cimg/postgres:15.2-postgis
+        environment:
+          POSTGRES_USER: circleci
+          POSTGRES_DB: circle_test
+          POSTGRES_PASSWORD: ""
+          DATABASE_URL: postgres://circleci@localhost:5432/circle_test
     steps:
       - checkout
+      - run: dockerize -wait tcp://localhost:5432 -timeout 1m
       - run: |
-          echo "Running tests..."
-          mvn test
+          name: Run Tests
+          command: mvn test
           timeout: 600
+
 
   scan:
     docker:

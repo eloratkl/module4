@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: com.ntu.edu.group5.ecommerce.TestSellerServiceforTest
 -------------------------------------------------------------------------------
-Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 7.129 s -- in com.ntu.edu.group5.ecommerce.TestSellerServiceforTest
+Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 4.510 s -- in com.ntu.edu.group5.ecommerce.TestSellerServiceforTest

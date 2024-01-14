@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: com.ntu.edu.group5.ecommerce.AddressControllerTest
 -------------------------------------------------------------------------------
-Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.504 s -- in com.ntu.edu.group5.ecommerce.AddressControllerTest
+Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.649 s -- in com.ntu.edu.group5.ecommerce.AddressControllerTest

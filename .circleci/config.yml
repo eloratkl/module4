@@ -15,7 +15,7 @@ jobs:
         type: string
     steps:
       - checkout
-      - run: mvn clean package
+      - run: mvn clean package -DskipTests=true
   test:
     docker:
       - image: cimg/openjdk:17.0.7

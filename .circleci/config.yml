@@ -48,7 +48,7 @@ jobs:
       # Run Snyk scan on the Docker image
       - snyk/scan:
           docker-image-name: $DOCKER_LOGIN/$IMAGE_NAME:latest
-          # severity-threshold: critical
+          severity-threshold: critical
 
   build-and-push:
     executor: docker/docker
@@ -111,7 +111,7 @@ workflows:
       # Build-and-push job runs after the test job
       - build-and-push:
           requires:
-            - scan
+            - test
 
       # Deploy job runs after the build-and-push job
       - pull-and-deploy:

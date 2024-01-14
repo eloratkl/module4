@@ -29,6 +29,8 @@ jobs:
       - run: |
           echo "Running tests..."
           mvn test
+          timeout: 600
+
   scan:
     docker:
         - image: cimg/openjdk:17.0.7

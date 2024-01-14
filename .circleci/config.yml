@@ -22,17 +22,18 @@ jobs:
       - image: cimg/openjdk:17.0.7
       - image: cimg/postgres:15.2-postgis
         environment:
-          POSTGRES_USER: circleci
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: password
           POSTGRES_DB: circle_test
-          DATABASE_URL: postgres://circleci@localhost:5432/circle_test
     steps:
       - checkout
+      - run:
+          name: Change Directory
+          command: cd /path/to/your/project
       - run: dockerize -wait tcp://localhost:5432 -timeout 1m
-      - run: |
+      - run:
           name: Run Tests
           command: mvn test
-          timeout: 600
-
 
   scan:
     docker:

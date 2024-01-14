@@ -48,7 +48,7 @@ jobs:
       # Run Snyk scan on the Docker image
       - snyk/scan:
           docker-image-name: $DOCKER_LOGIN/$IMAGE_NAME:latest
-          severity-threshold: critical
+          # severity-threshold: critical
 
   build-and-push:
     executor: docker/docker

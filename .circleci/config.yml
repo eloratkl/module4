@@ -30,8 +30,8 @@ jobs:
       - checkout
       - run: dockerize -wait tcp://localhost:5432 -timeout 1m
       - run:
-          name: Run Tests
-          command: mvn test
+          name: Run Tests and rebuild the project
+          command: mvn clean install
 
   scan:
     docker:

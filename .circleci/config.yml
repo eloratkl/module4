@@ -26,7 +26,7 @@ jobs:
           POSTGRES_DB: ${DATABASE_NAME}
           POSTGRES_USER: ${DATABASE_USERNAME}
           POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
-          POSTGRES_URL: ${DATABASE_URL}
+          POSTGRES_URL: ${POSTGRES_DATABASE_URL}
           POSTGRES_HOST_AUTH_METHOD: trust
     steps:
       - checkout

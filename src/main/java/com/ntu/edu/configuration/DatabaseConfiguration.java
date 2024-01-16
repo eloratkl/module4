@@ -12,7 +12,7 @@ import java.net.URISyntaxException;
 @Configuration
 public class DatabaseConfiguration {
 
-    @Value("${application.datasource.url}")
+    @Value("${app.datasource.url}")
     private String applicationDatabaseUrl;
 
     @Bean

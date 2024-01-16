@@ -13,11 +13,11 @@ import java.net.URISyntaxException;
 public class DatabaseConfiguration {
 
     @Value("${spring.datasource.url}")
-    private String applicationDatabaseUrl;
+    private String springDatabaseUrl;
 
     @Bean
     public DataSource dataSource() throws URISyntaxException {
-        final var dbUri = new URI(applicationDatabaseUrl);
+        final var dbUri = new URI(springDatabaseUrl);
 
         final var userInfoSegments = dbUri.getUserInfo().split(":");
         final var username = userInfoSegments[0];

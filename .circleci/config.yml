@@ -22,12 +22,12 @@ jobs:
       - image: cimg/openjdk:17.0.7
       - image: cimg/postgres:15.2-postgis
         environment:
-            POSTGRES_PORT: ${PORT}
-            POSTGRES_DB: ${DATABASE_NAME}
-            POSTGRES_USER: ${DATABASE_USERNAME}
-            POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
-            POSTGRES_URL: ${DATABASE_URL}
-            POSTGRES_HOST_AUTH_METHOD: trust
+          POSTGRES_PORT: ${PORT}
+          POSTGRES_DB: ${DATABASE_NAME}
+          POSTGRES_USER: ${DATABASE_USERNAME}
+          POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
+          POSTGRES_URL: jdbc:postgresql://${DATABASE_HOST}:${PORT}/${DATABASE_NAME}?user=${DATABASE_USERNAME}&password=${DATABASE_PASSWORD}
+          POSTGRES_HOST_AUTH_METHOD: trust
     steps:
       - checkout
       - run: dockerize -wait tcp://localhost:5432 -timeout 1m
@@ -37,7 +37,7 @@ jobs:
 
   scan:
     docker:
-        - image: cimg/openjdk:17.0.7
+      - image: cimg/openjdk:17.0.7
     steps:
       - setup_remote_docker
       - checkout
@@ -78,12 +78,12 @@ jobs:
       - run:
           name: Heroku Container Push With Image From Docker Hub
           command: |
-              heroku container:login
-              docker tag $DOCKER_LOGIN/$IMAGE_NAME:latest registry.heroku.com/$HEROKU_APP_NAME/web
-              # format --- docker tag <image name from docker hub> registry.heroku.com/<app-name>/web
-              docker push registry.heroku.com/$HEROKU_APP_NAME/web
-              # format --- docker push registry.heroku.com/<app-name>/web
-              heroku container:release web -a $HEROKU_APP_NAME
+            heroku container:login
+            docker tag $DOCKER_LOGIN/$IMAGE_NAME:latest registry.heroku.com/$HEROKU_APP_NAME/web
+            # format --- docker tag <image name from docker hub> registry.heroku.com/<app-name>/web
+            docker push registry.heroku.com/$HEROKU_APP_NAME/web
+            # format --- docker push registry.heroku.com/<app-name>/web
+            heroku container:release web -a $HEROKU_APP_NAME
 
 workflows:
   # Declare a workflow that runs on every push to the main branch

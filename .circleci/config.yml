@@ -73,9 +73,6 @@ jobs:
       - setup_remote_docker
       - heroku/install
       - run:
-          name: Set Heroku Config Vars
-          command: heroku config:set DATABASE_URL=$(echo $DATABASE_URL) -a $HEROKU_APP_NAME
-      - run:
           name: Pull Docker Image From Docker Hub
           command: docker pull $DOCKER_LOGIN/$IMAGE_NAME:latest
       - run:

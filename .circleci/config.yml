@@ -22,9 +22,11 @@ jobs:
       - image: cimg/openjdk:17.0.7
       - image: cimg/postgres:15.2-postgis
         environment:
-            POSTGRES_DB: ecommercedb
-            POSTGRES_USER: postgres
-            POSTGRES_PASSWORD: password
+            POSTGRES_PORT: ${PORT}
+            POSTGRES_DB: ${DATABASE_NAME}
+            POSTGRES_USER: ${DATABASE_USERNAME}
+            POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
+            POSTGRES_URL: ${DATABASE_URL}
             POSTGRES_HOST_AUTH_METHOD: trust
     steps:
       - checkout

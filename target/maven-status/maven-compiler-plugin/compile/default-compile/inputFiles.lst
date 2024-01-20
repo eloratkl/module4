@@ -22,6 +22,7 @@
 /Users/catherinetiong/module4/src/main/java/com/ntu/edu/group5/ecommerce/exception/GlobalExceptionHandler.java
 /Users/catherinetiong/module4/src/main/java/com/ntu/edu/group5/ecommerce/repository/OrderRepository.java
 /Users/catherinetiong/module4/src/main/java/com/ntu/edu/group5/ecommerce/repository/SellerRepository.java
+/Users/catherinetiong/module4/src/main/java/com/ntu/edu/configuration/DatabaseConfiguration.java
 /Users/catherinetiong/module4/src/main/java/com/ntu/edu/group5/ecommerce/exception/CustomerNotFoundException.java
 /Users/catherinetiong/module4/src/main/java/com/ntu/edu/group5/ecommerce/repository/CartItemRepository.java
 /Users/catherinetiong/module4/src/main/java/com/ntu/edu/group5/ecommerce/service/CartItemService.java

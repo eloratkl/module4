@@ -42,6 +42,7 @@ com/ntu/edu/group5/ecommerce/service/CartItemServiceImpl$1.class
 com/ntu/edu/group5/ecommerce/controller/SellerController.class
 com/ntu/edu/group5/ecommerce/exception/SellerNotFoundException.class
 com/ntu/edu/group5/ecommerce/exception/CartItemNotFoundException.class
+com/ntu/edu/configuration/DatabaseConfiguration.class
 com/ntu/edu/group5/ecommerce/service/SellerService.class
 com/ntu/edu/group5/ecommerce/entity/Cart.class
 com/ntu/edu/group5/ecommerce/controller/TemplateAdress.class

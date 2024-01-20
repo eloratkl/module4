@@ -1,18 +1,13 @@
 version: 2.1
 orbs:
-  snyk: snyk/snyk@2.0.2
-  docker: circleci/docker@2.4.0
+  snyk: snyk/snyk@2.0.3
+  docker: circleci/docker@2.5.0
   heroku: circleci/heroku@2.0.0
 
 jobs:
   build:
     docker:
       - image: cimg/openjdk:17.0.7
-    parameters:
-      dockerhub-username:
-        type: string
-      dockerhub-password:
-        type: string
     steps:
       - checkout
       - run: mvn clean package -DskipTests=true
@@ -33,7 +28,7 @@ jobs:
       - run: dockerize -wait tcp://localhost:5432 -timeout 1m
       - run:
           name: Run Tests and rebuild the project
-          command: mvn clean install
+          command: mvn test
 
   scan:
     docker:
@@ -45,8 +40,6 @@ jobs:
       - run: docker build -t $DOCKER_LOGIN/$IMAGE_NAME:latest .
       # Login to Docker Hub using environment variables
       - run: echo "${DOCKER_PASSWORD}" | docker login -u "${DOCKER_LOGIN}" --password-stdin
-      # Push the image to Docker Hub
-      - run: docker push $DOCKER_LOGIN/$IMAGE_NAME:latest
       # Run Snyk scan on the Docker image
       - snyk/scan:
           docker-image-name: $DOCKER_LOGIN/$IMAGE_NAME:latest
@@ -91,8 +84,6 @@ workflows:
     jobs:
       # Build job triggered on changes to the main branch
       - build:
-          dockerhub-username: $DOCKER_LOGIN
-          dockerhub-password: $DOCKER_PASSWORD
           filters:
             branches:
               only: main

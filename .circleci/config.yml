@@ -45,7 +45,7 @@ jobs:
           docker-image-name: $DOCKER_LOGIN/$IMAGE_NAME:latest
           severity-threshold: critical
 
-  build-and-push:
+  publish:
     executor: docker/docker
     steps:
       - setup_remote_docker
@@ -80,33 +80,37 @@ jobs:
 
 workflows:
   # Declare a workflow that runs on every push to the main branch
-  simple_workflow:
+  ci_workflow:
     jobs:
-      # Build job triggered on changes to the main branch
-      - build:
-          filters:
-            branches:
-              only: main
-
-      # Test job runs after the build job and only on the main branch
+      - build
       - test:
-          # to let `test` job run after the `build` job
           requires:
             - build
-          filters:
-            branches:
-              only: main
-
       - scan:
           requires:
             - test
-
-      # Build-and-push job runs after the test job
-      - build-and-push:
+      - publish:
           requires:
             - test
+          filters:
+            branches:
+              only: develop
 
-      # Deploy job runs after the build-and-push job
+  cicd_workflow:
+    jobs:
+      - build
+      - test:
+          requires:
+            - build
+      - scan:
+          requires:
+            - test
+      - publish:
+          requires:
+            - test
       - pull-and-deploy:
           requires:
-            - build-and-push
+            - publish
+          filters:
+            branches:
+              only: release

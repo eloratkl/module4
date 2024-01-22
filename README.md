@@ -73,6 +73,8 @@ The project uses the following tools and technologies:
 
 ### Preview
 https://github.com/catherinetkl/module4/assets/70590533/bdbff3de-d659-4e0b-81a8-2d7dd0381084
+https://github.com/catherinetkl/module4/assets/70590533/c229cd57-cdbd-4f6b-8d78-5446b99a6a63
+
 
 
 

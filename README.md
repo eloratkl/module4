@@ -72,8 +72,12 @@ The project uses the following tools and technologies:
 - Heroku
 
 ### Preview
-https://github.com/catherinetkl/module4/assets/70590533/bdbff3de-d659-4e0b-81a8-2d7dd0381084
-https://github.com/catherinetkl/module4/assets/70590533/c229cd57-cdbd-4f6b-8d78-5446b99a6a63
+<video src='https://github.com/catherinetkl/module4/assets/70590533/d32986e2-348d-4221-9356-d4a3a6bea7c5' width=180/>
+<video src='https://github.com/catherinetkl/module4/assets/70590533/123daf0d-9925-4241-97f4-411896632f0b' width=180/>
+
+
+
+
 
 
 

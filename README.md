@@ -71,6 +71,15 @@ The project uses the following tools and technologies:
 - CircleCI
 - Heroku
 
+### Preview
+https://github.com/catherinetkl/module4/assets/70590533/bdbff3de-d659-4e0b-81a8-2d7dd0381084
+
+
+
+
+
+
+
 ### Acknowledgments
 
 Special thanks to the contributors and maintainers of the project. \
